@@ -1,5 +1,5 @@
 from pathlib import Path
-from IMC_GNN import datasets as ds
+from GraphGym.graphgym.contrib.loader import datasets as ds
 from graphgym.register import register_loader
 from deepsnap.dataset import GraphDataset
 
@@ -22,7 +22,7 @@ def load_hiv_dataset(format, name, dataset_dir):
     dataset_dir = '{}/{}'.format(dataset_dir, name)
     if format == 'PyG':
         if name == 'hiv':
-            dataset_raw = ds.HIV_Dataset(neighbordef='initial', subgraph='none',
+            dataset_raw = ds.HIV_Dataset(neighbordef='initial', subgraph='windows',
                                          naive_radius=25,
                                          knn=5, knn_max=50,
                                          high_exp_marker='CK', exp_radius=5, exp_depth=10,
