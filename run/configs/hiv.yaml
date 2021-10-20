@@ -6,7 +6,7 @@ dataset:
   task_type: classification
   transductive: False
   node_encoder: False
-  node_encoder_name: Gene
+  node_encoder_name: Integer
   edge_encoder: False
   edge_encoder_name: Bond
   shuffle_split: False

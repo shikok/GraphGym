@@ -1,7 +1,7 @@
 out_dir: results
 dataset:
   format: PyG
-  name: hiv_nei_nds
+  name: hiv_nc_ds
   task: node
   task_type: regression
   transductive: False
