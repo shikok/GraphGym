@@ -1,7 +1,7 @@
 out_dir: results
 dataset:
   format: PyG
-  name: hiv
+  name: HIVSlideRad
   task: graph
   task_type: classification
   transductive: False
@@ -9,9 +9,9 @@ dataset:
   node_encoder_name: Integer
   edge_encoder: False
   edge_encoder_name: Bond
-  shuffle_split: False
+  shuffle_split: True
 train:
-  batch_size: 128
+  batch_size: 24
   eval_period: 1
   ckpt_period: 100
   sampler: full_batch
