@@ -2,14 +2,12 @@ import networkx as nx
 import time
 import logging
 import pickle
-
 from deepsnap.dataset import GraphDataset
 import torch
 from torch.utils.data import DataLoader
-
+from operator import itemgetter
 from torch_geometric.datasets import *
 import torch_geometric.transforms as T
-
 from graphgym.config import cfg
 import graphgym.models.feature_augment as preprocess
 from graphgym.models.transform import (ego_nets, remove_node_feature,
@@ -20,6 +18,9 @@ import graphgym.register as register
 from ogb.graphproppred import PygGraphPropPredDataset
 from deepsnap.batch import Batch
 
+from IMC_GNN.datasets_handlers import slide_datasets as sds
+from IMC_GNN.datasets_handlers import self_suppervision_datasets as ssds
+from IMC_GNN.datasets_handlers.slide_datasets import get_custom_split_data_ind
 
 def load_pyg(name, dataset_dir):
     '''
@@ -69,9 +70,21 @@ def load_pyg(name, dataset_dir):
         dataset_raw = PPI(dataset_dir)
     elif name == 'QM7b':
         dataset_raw = QM7b(dataset_dir)
+    elif name == 'HIVSlidePhy':
+        dataset_raw = sds.HivSlidePhysicalDataSet()
+    elif name == 'HIVSlideRad':
+        dataset_raw = sds.HivSlideRadiusDataSet(radius=10.0)
+    elif name == 'HIVSelSupPhy':
+        dataset_raw = ssds.HivSelfSupPhysicalDataSet()
+    elif name == 'HIVSelSupRad':
+        dataset_raw = ssds.HivSelfSupRadiusDataSet2(radius=10.0)
+    elif name == 'HIVSelSupPhyLar':
+        dataset_raw = ssds.HivSelfSupPhysicalDataSetLarge()
+    elif 'HIVSlidePhySubGraph' in name:
+        dataset_raw = sds.HivSlidePhySubGraphDataSet()
     else:
         raise ValueError('{} not support'.format(name))
-    graphs = GraphDataset.pyg_to_graphs(dataset_raw)
+    graphs = GraphDataset.pyg_to_graphs(dataset_raw, verbose=False)
     return graphs
 
 
@@ -199,7 +212,7 @@ def create_dataset():
     ## Filter graphs
     time2 = time.time()
     min_node = filter_graphs()
-
+    train_ind, val_ind, test_ind = get_custom_split_data_ind(int(cfg.dataset.name[-1]))
     ## Create whole dataset
     dataset = GraphDataset(
         graphs,
@@ -208,7 +221,8 @@ def create_dataset():
         edge_message_ratio=cfg.dataset.edge_message_ratio,
         edge_negative_sampling_ratio=cfg.dataset.edge_negative_sampling_ratio,
         resample_disjoint=cfg.dataset.resample_disjoint,
-        minimum_node_per_graph=min_node)
+        minimum_node_per_graph=min_node,
+        custom_split_graphs = [list(itemgetter(*train_ind)(graphs)), list(itemgetter(*val_ind)(graphs)), list(itemgetter(*test_ind)(graphs))])
 
     ## Transform the whole dataset
     dataset = transform_before_split(dataset)
