@@ -20,11 +20,11 @@ model:
   loss_fun: cross_entropy
 gnn:
   layers_pre_mp: 2
-  layers_mp: 3
-  layers_post_mp: 3
+  layers_mp: 2
+  layers_post_mp: 2
   dim_inner: 128
   layer_type: gatconv
-  stage_type: skipconcat
+  stage_type: skipsum
   batchnorm: True
   act: relu
   dropout: 0.1
