@@ -1,7 +1,7 @@
 out_dir: results
 dataset:
   format: PyG
-  name: HIVSlidePhySubGraph0
+  name: C1SlidePhySubGraphDataSet0
   task: graph
   task_type: classification_binary
   transductive: False
@@ -11,7 +11,7 @@ dataset:
   edge_encoder_name: Bond
   shuffle_split: False
 train:
-  batch_size: 32
+  batch_size: 17
   eval_period: 1
   ckpt_period: 10
   sampler: full_batch
@@ -20,15 +20,15 @@ model:
   type: gnn
   loss_fun: cross_entropy
 gnn:
-  layers_pre_mp: 2
+  layers_pre_mp: 1
   layers_mp: 2
   layers_post_mp: 2
   dim_inner: 128
-  layer_type: gatconv
-  stage_type: skipsum
+  layer_type: gcnconv
+  stage_type: skipconcat
   batchnorm: True
   act: relu
-  dropout: 0.1
+  dropout: 0.3
   agg: max
   normalize_adj: False
 optim:

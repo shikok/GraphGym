@@ -1,7 +1,8 @@
 out_dir: results
+metric_best: rmse
 dataset:
   format: PyG
-  name: hiv_nc_ds
+  name: HIVSelSupPhy
   task: node
   task_type: regression
   transductive: False
@@ -9,7 +10,7 @@ dataset:
   node_encoder_name: Gene
   edge_encoder: False
   edge_encoder_name: Bond
-  shuffle_split: False
+  shuffle_split: True
 train:
   batch_size: 128
   eval_period: 1

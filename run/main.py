@@ -1,5 +1,7 @@
 import os
 import random
+from pathlib import Path
+
 import numpy as np
 import torch
 import logging
@@ -15,10 +17,19 @@ from graphgym.train import train
 from graphgym.utils.agg_runs import agg_runs
 from graphgym.utils.comp_budget import params_count
 from graphgym.utils.device import auto_select_device
-from graphgym.contrib.train import *
+import sys
 from graphgym.register import train_dict
 
+# sys.path.append(r".")
+# sys.path.append(r"..")
+
+
 if __name__ == '__main__':
+    sys.path.append(Path(__file__).parent.parent.parent.joinpath("IMC_GNN").as_posix())
+    sys.path.append(Path(__file__).parent.parent.parent.as_posix())
+    sys.path.append(Path(__file__).as_posix())
+    print(os.getcwd())
+    print(sys.path)
     # Load cmd line args
     args = parse_args()
     # Repeat for different random seeds

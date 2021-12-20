@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
-
-CONFIG=c2
-GRID=slide_grid
-REPEAT=1
+##!/usr/bin/env bash
+#
+CONFIG=c1
+GRID=split_grid
+REPEAT=4
 MAX_JOBS=8
 SLEEP=1
 IMC_PATH=C:\/Users\/shayshi\/Documents\/IMCcode

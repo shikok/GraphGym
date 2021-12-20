@@ -212,7 +212,7 @@ def create_dataset():
     ## Filter graphs
     time2 = time.time()
     min_node = filter_graphs()
-    train_ind, val_ind, test_ind = get_custom_split_data_ind(int(cfg.dataset.name[-1]))
+    train_ind, val_ind, test_ind = get_custom_split_data_ind(cfg.dataset.name)
     ## Create whole dataset
     dataset = GraphDataset(
         graphs,
@@ -222,8 +222,8 @@ def create_dataset():
         edge_negative_sampling_ratio=cfg.dataset.edge_negative_sampling_ratio,
         resample_disjoint=cfg.dataset.resample_disjoint,
         minimum_node_per_graph=min_node,
-        custom_split_graphs = [list(itemgetter(*train_ind)(graphs)), list(itemgetter(*val_ind)(graphs)), list(itemgetter(*test_ind)(graphs))])
-
+        custom_split_graphs=[list(itemgetter(*train_ind)(graphs)), list(itemgetter(*val_ind)(graphs)), list(itemgetter(*test_ind)(graphs))]
+        )
     ## Transform the whole dataset
     dataset = transform_before_split(dataset)
 

@@ -45,6 +45,7 @@ def eval_epoch(logger, loader, model, split='val'):
                             time_used=time.time() - time_start,
                             params=cfg.params)
         time_start = time.time()
+    return logger._custom_stats["accuracy"]
 
 
 def train(loggers, loaders, model, optimizer, scheduler):
@@ -58,13 +59,17 @@ def train(loggers, loaders, model, optimizer, scheduler):
 
     num_splits = len(loggers)
     split_names = ['val', 'test']
+    best_val_acc = 0
     for cur_epoch in range(start_epoch, cfg.optim.max_epoch):
         train_epoch(loggers[0], loaders[0], model, optimizer, scheduler)
         loggers[0].write_epoch(cur_epoch)
         if is_eval_epoch(cur_epoch):
             for i in range(1, num_splits):
-                eval_epoch(loggers[i], loaders[i], model,
-                           split=split_names[i - 1])
+                acc = eval_epoch(loggers[i], loaders[i], model,
+                                 split=split_names[i - 1])
+                if acc > best_val_acc:
+                    best_val_acc = acc
+                    save_ckpt(model, optimizer, scheduler, cur_epoch)
                 loggers[i].write_epoch(cur_epoch)
         if is_ckpt_epoch(cur_epoch):
             save_ckpt(model, optimizer, scheduler, cur_epoch)

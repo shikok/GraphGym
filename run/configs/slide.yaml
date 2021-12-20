@@ -15,6 +15,7 @@ train:
   eval_period: 1
   ckpt_period: 10
   sampler: full_batch
+  ckpt_clean: False
 model:
   type: gnn
   loss_fun: cross_entropy
