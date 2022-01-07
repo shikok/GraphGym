@@ -28,7 +28,7 @@ gnn:
   stage_type: skipsum
   batchnorm: True
   act: relu
-  dropout: 0.1
+  dropout: 0.3
   agg: mean
   normalize_adj: False
 optim:

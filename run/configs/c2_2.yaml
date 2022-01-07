@@ -1,7 +1,7 @@
 out_dir: results
 dataset:
   format: PyG
-  name: C1SlidePhySubGraphDataSet0
+  name: C2SlidePhySubGraphDataSet0
   task: graph
   task_type: classification_binary
   transductive: False
@@ -11,7 +11,7 @@ dataset:
   edge_encoder_name: Bond
   shuffle_split: False
 train:
-  batch_size: 9
+  batch_size: 17
   eval_period: 1
   ckpt_period: 10
   sampler: full_batch
@@ -22,14 +22,13 @@ model:
 gnn:
   layers_pre_mp: 1
   layers_mp: 1
-  layers_post_mp: 1
-  dim_inner: 128
-  layer_type: generalconv
-  stage_type: skipsum
+  layers_post_mp: 2
+  dim_inner: 64
+  layer_type: gatconv
+  stage_type: skipconcat
   batchnorm: True
   act: relu
-  dropout: 0.3
-  agg: mean
+  agg: max
   normalize_adj: False
 optim:
   optimizer: adam

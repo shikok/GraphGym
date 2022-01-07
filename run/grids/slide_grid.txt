@@ -9,4 +9,5 @@ gnn.layers_post_mp l_post [1,2]
 gnn.stage_type stage ['skipsum','skipconcat']
 gnn.agg agg ['add','mean','max']
 gnn.layer_type l_type ['generalconv','gcnconv','sageconv','gatconv']
+gnn.dropout drop [0.1,0.3]
 

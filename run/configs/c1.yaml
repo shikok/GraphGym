@@ -11,7 +11,7 @@ dataset:
   edge_encoder_name: Bond
   shuffle_split: False
 train:
-  batch_size: 17
+  batch_size: 9
   eval_period: 1
   ckpt_period: 10
   sampler: full_batch
