@@ -5,4 +5,4 @@
 
 
 # (1) dataset configurations
-dataset.name dataset ['C1RedSubGraphDataSet0','C1RedSubGraphDataSet1','C1RedSubGraphDataSet2','C1RedSubGraphDataSet3','C1RedSubGraphDataSet4','C1RedSubGraphDataSet5','C1RedSubGraphDataSet6','C1RedSubGraphDataSet7','C1RedSubGraphDataSet8','C1RedSubGraphDataSet9']
+dataset.name dataset ['C1SlidePhySubGraphDataSet0','C1SlidePhySubGraphDataSet1','C1SlidePhySubGraphDataSet2','C1SlidePhySubGraphDataSet3','C1SlidePhySubGraphDataSet4','C1SlidePhySubGraphDataSet5','C1SlidePhySubGraphDataSet6','C1SlidePhySubGraphDataSet7','C1SlidePhySubGraphDataSet8','C1SlidePhySubGraphDataSet9']

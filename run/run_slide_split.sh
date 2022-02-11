@@ -1,7 +1,7 @@
 ##!/usr/bin/env bash
 #
-CONFIG=c1_red
-GRID=split_grid_c1
+CONFIG=c3_2
+GRID=split_grid_c3
 REPEAT=4
 MAX_JOBS=8
 SLEEP=1

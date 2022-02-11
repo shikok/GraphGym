@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CONFIG=c2
+CONFIG=c3
 GRID=slide_grid
 REPEAT=1
 MAX_JOBS=8
