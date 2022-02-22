@@ -12,15 +12,14 @@ from graphgym.config import cfg
 import graphgym.models.feature_augment as preprocess
 from graphgym.models.transform import (ego_nets, remove_node_feature,
                                        edge_nets, path_len)
-from graphgym.contrib.loader import *
 import graphgym.register as register
 
 from ogb.graphproppred import PygGraphPropPredDataset
 from deepsnap.batch import Batch
 
-from IMC_GNN.datasets_handlers import slide_datasets as sds
+from IMC_GNN.datasets import HIV as sds
 from IMC_GNN.datasets_handlers import self_suppervision_datasets as ssds
-from IMC_GNN.datasets_handlers.slide_datasets import get_custom_split_data_ind
+from IMC_GNN.datasets.HIV import get_custom_split_data_ind
 
 def load_pyg(name, dataset_dir):
     '''

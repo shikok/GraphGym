@@ -1,7 +1,7 @@
 ##!/usr/bin/env bash
 #
-CONFIG=c3_2
-GRID=split_grid_c3
+CONFIG=c2_mix
+GRID=split_grid_c2_mix
 REPEAT=4
 MAX_JOBS=8
 SLEEP=1
