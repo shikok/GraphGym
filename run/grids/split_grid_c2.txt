@@ -5,5 +5,4 @@
 
 
 # (1) dataset configurations
-# dataset.name dataset ['HIVSlidePhySubGraph0','HIVSlidePhySubGraph1','HIVSlidePhySubGraph2','HIVSlidePhySubGraph3','HIVSlidePhySubGraph4','HIVSlidePhySubGraph5','HIVSlidePhySubGraph6','HIVSlidePhySubGraph7','HIVSlidePhySubGraph8','HIVSlidePhySubGraph9']
 dataset.name dataset ['C2SlidePhySubGraphDataSet0','C2SlidePhySubGraphDataSet1','C2SlidePhySubGraphDataSet2','C2SlidePhySubGraphDataSet3','C2SlidePhySubGraphDataSet4','C2SlidePhySubGraphDataSet5','C2SlidePhySubGraphDataSet6','C2SlidePhySubGraphDataSet7','C2SlidePhySubGraphDataSet8','C2SlidePhySubGraphDataSet9']

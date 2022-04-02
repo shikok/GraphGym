@@ -1,8 +1,0 @@
-# Format for each row: name in config.py; alias; range to search
-# No spaces, except between these 3 fields
-# Line breaks are used to union different grid search spaces
-# Feel free to add '#' to add comments
-
-
-# (1) dataset configurations
-dataset.name dataset ['C2MixSubGraphDataSet_seed_0_n0','C2MixSubGraphDataSet_seed_0_n1','C2MixSubGraphDataSet_seed_0_n2','C2MixSubGraphDataSet_seed_0_n3','C2MixSubGraphDataSet_seed_0_n4','C2MixSubGraphDataSet_seed_0_n5','C2MixSubGraphDataSet_seed_0_n6','C2MixSubGraphDataSet_seed_0_n7','C2MixSubGraphDataSet_seed_0_n8','C2MixSubGraphDataSet_seed_0_n9']

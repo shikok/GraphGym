@@ -4,12 +4,12 @@ REPEAT=4
 MAX_JOBS=8
 SLEEP=1
 IMC_PATH=C:\/Users\/shayshi\/Documents\/IMCcode
-for CNUM in c1 c2
+for CNUM in c2
 do
   CONFIG=$CNUM'_mix'
-  for SEED in 0 1 2 3 4 5 6 7 8 9
+  for SEED in 10 11
   do
-    GRID=$CNUM'_seed_'$SEED
+    GRID=$CNUM'_seednew_'$SEED
     # generate configs (after controlling computational budget)
     # please remove --config_budget, if don't control computational budget
     python -m GraphGym.run.configs_gen --config ${IMC_PATH}/GraphGym/run/configs/${CONFIG}.yaml \
