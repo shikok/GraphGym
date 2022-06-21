@@ -1,0 +1,37 @@
+out_dir: results
+dataset:
+  format: PyG
+  name: CodexSlidePhySubGraphDataSet0
+  task: graph
+  task_type: classification_binary
+  transductive: False
+  node_encoder: False
+  node_encoder_name: Integer
+  edge_encoder: False
+  edge_encoder_name: Bond
+  shuffle_split: False
+train:
+  batch_size: 32
+  eval_period: 1
+  ckpt_period: 10
+  sampler: full_batch
+  ckpt_clean: False
+model:
+  type: gnn
+  loss_fun: cross_entropy
+gnn:
+  layers_pre_mp: 1
+  layers_mp: 2
+  layers_post_mp: 2
+  dim_inner: 128
+  layer_type: gcnconv
+  stage_type: skipconcat
+  batchnorm: True
+  act: relu
+  dropout: 0.3
+  agg: max
+  normalize_adj: False
+optim:
+  optimizer: adam
+  base_lr: 0.001
+  max_epoch: 200
