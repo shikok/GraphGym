@@ -18,8 +18,8 @@ from ogb.graphproppred import PygGraphPropPredDataset
 from deepsnap.batch import Batch
 
 from IMC_GNN.datasets import HIV as sds
+from IMC_GNN.datasets.general import get_custom_split_data_ind
 from IMC_GNN.datasets_handlers import self_suppervision_datasets as ssds
-from IMC_GNN.datasets.HIV import get_custom_split_data_ind
 
 def load_pyg(name, dataset_dir):
     '''
