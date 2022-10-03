@@ -1,7 +1,7 @@
 out_dir: results
 dataset:
   format: PyG
-  name: C2SlidePhySubGraphDataSet5
+  name: C2SlidePhySubGraphDataSet_ar_ac9
   task: graph
   task_type: classification_binary
   transductive: False
@@ -11,7 +11,7 @@ dataset:
   edge_encoder_name: Bond
   shuffle_split: False
 train:
-  batch_size: 17
+  batch_size: 24
   eval_period: 1
   ckpt_period: 10
   sampler: full_batch
@@ -33,5 +33,5 @@ gnn:
   normalize_adj: False
 optim:
   optimizer: adam
-  base_lr: 0.01
+  base_lr: 0.001
   max_epoch: 200

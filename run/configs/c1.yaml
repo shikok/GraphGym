@@ -1,7 +1,7 @@
 out_dir: results
 dataset:
   format: PyG
-  name: C1SlidePhySubGraphDataSet0
+  name: C1SlidePhysicalDataSet0
   task: graph
   task_type: classification_binary
   transductive: False
@@ -34,4 +34,4 @@ gnn:
 optim:
   optimizer: adam
   base_lr: 0.01
-  max_epoch: 200
+  max_epoch: 15

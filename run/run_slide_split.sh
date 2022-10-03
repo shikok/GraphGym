@@ -1,7 +1,7 @@
 ##!/usr/bin/env bash
 #
-CONFIG=codex
-GRID=codex
+CONFIG=c1
+GRID=c1_full
 REPEAT=4
 MAX_JOBS=8
 SLEEP=1
