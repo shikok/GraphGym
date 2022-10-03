@@ -1,0 +1,6 @@
+# Format for each row: name in config.py; alias; range to search
+# No spaces, except between these 3 fields
+# Line breaks are used to union different grid search spaces
+# Feel free to add '#' to add comments
+# (1) dataset configurations
+dataset.name dataset ['STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph0','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph1','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph2']

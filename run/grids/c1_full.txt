@@ -1,0 +1,8 @@
+# Format for each row: name in config.py; alias; range to search
+# No spaces, except between these 3 fields
+# Line breaks are used to union different grid search spaces
+# Feel free to add '#' to add comments
+
+
+# (1) dataset configurations
+dataset.name dataset ['C1SlidePhysicalDataSet0','C1SlidePhysicalDataSet1','C1SlidePhysicalDataSet2']

@@ -1,3 +1,5 @@
+import re
+
 import networkx as nx
 import time
 import logging
@@ -12,14 +14,18 @@ from graphgym.config import cfg
 import graphgym.models.feature_augment as preprocess
 from graphgym.models.transform import (ego_nets, remove_node_feature,
                                        edge_nets, path_len)
+from graphgym.contrib.loader import *
 import graphgym.register as register
-
+from pathlib import Path
 from ogb.graphproppred import PygGraphPropPredDataset
 from deepsnap.batch import Batch
-
-from IMC_GNN.datasets import HIV as sds
+from IMC_GNN.datasets.C_datasets import CNames, CSlidePhySubGraphDataSet, CDatasets, CRedSubGraphDataSet
+from IMC_GNN.datasets.HIV import HivSlidePhySubGraphDataSet, HivSlidePhysicalDataSet
+from IMC_GNN.datasets.codex import CodexSlidePhySubGraphDataSet, CodexSlidePhysicalDataSet
+from IMC_GNN.datasets_handlers.base_datasets import DatasetType, SUB_GRAPH_ADDITION
 from IMC_GNN.datasets.general import get_custom_split_data_ind
-from IMC_GNN.datasets_handlers import self_suppervision_datasets as ssds
+from IMC_GNN.datasets.ST import STSlidePhySubGraphDataSet, STSlidePhysicalDataSet
+
 
 def load_pyg(name, dataset_dir):
     '''
@@ -70,21 +76,164 @@ def load_pyg(name, dataset_dir):
     elif name == 'QM7b':
         dataset_raw = QM7b(dataset_dir)
     elif name == 'HIVSlidePhy':
-        dataset_raw = sds.HivSlidePhysicalDataSet()
-    elif name == 'HIVSlideRad':
-        dataset_raw = sds.HivSlideRadiusDataSet(radius=10.0)
-    elif name == 'HIVSelSupPhy':
-        dataset_raw = ssds.HivSelfSupPhysicalDataSet()
-    elif name == 'HIVSelSupRad':
-        dataset_raw = ssds.HivSelfSupRadiusDataSet2(radius=10.0)
-    elif name == 'HIVSelSupPhyLar':
-        dataset_raw = ssds.HivSelfSupPhysicalDataSetLarge()
+        dataset_raw = HivSlidePhysicalDataSet()
     elif 'HIVSlidePhySubGraph' in name:
-        dataset_raw = sds.HivSlidePhySubGraphDataSet()
+        dataset_raw = HivSlidePhySubGraphDataSet()
+    elif 'CRedSubGraphDataSet' in name:
+        dataset_raw = CRedSubGraphDataSet()
+    elif CNames.C1_RAD in name:
+        radius = re.findall(r"r_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(sg_radius=int(radius), c_num=CDatasets.C1_DATASET,
+                                                    ds_type=DatasetType.RADIUS, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C1_SG in name:
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C1_DATASET, ds_type=DatasetType.REGULAR, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C1_MIX_SG in name:
+        seed = re.findall(r"seed_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C1_DATASET, ds_type=DatasetType.MIX, rand_seed=seed, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C2_RAD in name:
+        radius = re.findall(r"r_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(sg_radius=int(radius), c_num=CDatasets.C2_DATASET,
+                                                    ds_type=DatasetType.RADIUS, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C2_SG in name:
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C2_DATASET, ds_type=DatasetType.REGULAR, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C2_MIX_SG in name:
+        seed = re.findall(r"seed_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C2_DATASET, ds_type=DatasetType.MIX, rand_seed=seed, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif "CodexSlidePhySubGraphDataSet" in name:
+        try:
+            nr, sgr = re.findall(r"nr_(\d+)_sgr_(\d+)", name)[0]
+        except IndexError:
+            dataset_raw = CodexSlidePhySubGraphDataSet(add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+        dataset_raw = CodexSlidePhySubGraphDataSet(neighborhood_radius=int(nr), sg_radius=int(sgr), add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif "CodexSlidePhysicalDataSet" in name:
+        try:
+            nr = re.findall(r"nr_(\d+)", name)[0]
+            dataset_raw = CodexSlidePhysicalDataSet(neighborhood_radius=int(nr))
+        except IndexError:
+            dataset_raw = CodexSlidePhysicalDataSet()
+    elif "STSlidePhySubGraphDataSet" in name:
+        try:
+            nr, sgr = re.findall(r"nr_(\d+)_sgr_(\d+)", name)[0]
+        except IndexError:
+            dataset_raw = STSlidePhySubGraphDataSet(add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+        dataset_raw = STSlidePhySubGraphDataSet(neighborhood_radius=int(nr), sg_radius=int(sgr), add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif "STSlidePhysicalDataSet" in name:
+        try:
+            nr = re.findall(r"nr_(\d+)", name)[0]
+            dataset_raw = STSlidePhysicalDataSet(neighborhood_radius=int(nr))
+        except IndexError:
+            dataset_raw = STSlidePhysicalDataSet()
     else:
+        print(f"name {name} is not suported !!!!!!!!!!")
         raise ValueError('{} not support'.format(name))
     graphs = GraphDataset.pyg_to_graphs(dataset_raw, verbose=False)
     return graphs
+
+def load_key_from_ds_raw(name, key):
+    '''
+    load pyg format dataset
+    :param name: dataset name
+    :param dataset_dir: data directory
+    :return: a list of networkx/deepsnap graphs
+    '''
+    dataset_dir = cfg.dataset.dir
+    dataset_dir = '{}/{}'.format(dataset_dir, name)
+    if name in ['Cora', 'CiteSeer', 'PubMed']:
+        dataset_raw = Planetoid(dataset_dir, name)
+    elif name[:3] == 'TU_':
+        # TU_IMDB doesn't have node features
+        if name[3:] == 'IMDB':
+            name = 'IMDB-MULTI'
+            dataset_raw = TUDataset(dataset_dir, name,
+                                    transform=T.Constant())
+        else:
+            dataset_raw = TUDataset(dataset_dir, name[3:])
+        # TU_dataset only has graph-level label
+        # The goal is to have synthetic tasks
+        # that select smallest 100 graphs that have more than 200 edges
+        if cfg.dataset.tu_simple and cfg.dataset.task != 'graph':
+            size = []
+            for data in dataset_raw:
+                edge_num = data.edge_index.shape[1]
+                edge_num = 9999 if edge_num < 200 else edge_num
+                size.append(edge_num)
+            size = torch.tensor(size)
+            order = torch.argsort(size)[:100]
+            dataset_raw = dataset_raw[order]
+    elif name == 'Karate':
+        dataset_raw = KarateClub()
+    elif 'Coauthor' in name:
+        if 'CS' in name:
+            dataset_raw = Coauthor(dataset_dir, name='CS')
+        else:
+            dataset_raw = Coauthor(dataset_dir, name='Physics')
+    elif 'Amazon' in name:
+        if 'Computers' in name:
+            dataset_raw = Amazon(dataset_dir, name='Computers')
+        else:
+            dataset_raw = Amazon(dataset_dir, name='Photo')
+    elif name == 'MNIST':
+        dataset_raw = MNISTSuperpixels(dataset_dir)
+    elif name == 'PPI':
+        dataset_raw = PPI(dataset_dir)
+    elif name == 'QM7b':
+        dataset_raw = QM7b(dataset_dir)
+    elif name == 'HIVSlidePhy':
+        dataset_raw = HivSlidePhysicalDataSet()
+    elif 'HIVSlidePhySubGraph' in name:
+        dataset_raw = HivSlidePhySubGraphDataSet()
+    elif CNames.C1_RAD in name:
+        radius = re.findall(r"r_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(sg_radius=int(radius), c_num=CDatasets.C1_DATASET,
+                                                    ds_type=DatasetType.RADIUS, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C2_RAD in name:
+        radius = re.findall(r"r_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(sg_radius=int(radius), c_num=CDatasets.C2_DATASET,
+                                                    ds_type=DatasetType.RADIUS, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C1_SG in name:
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C1_DATASET, ds_type=DatasetType.REGULAR, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C1_MIX_SG in name:
+        seed = re.findall(r"seed_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C1_DATASET, ds_type=DatasetType.MIX, rand_seed=seed, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C2_SG in name:
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C2_DATASET, ds_type=DatasetType.REGULAR, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif CNames.C2_MIX_SG in name:
+        seed = re.findall(r"seed_(\d+)", name)[0]
+        dataset_raw = CSlidePhySubGraphDataSet(c_num=CDatasets.C2_DATASET, ds_type=DatasetType.MIX, rand_seed=seed, add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    elif 'CodexSlidePhySubGraphDataSet' in name:
+        try:
+            nr, sgr = re.findall(r"nr_(\d+)_sgr_(\d+)", name)[0]
+        except IndexError:
+            dataset_raw = CodexSlidePhySubGraphDataSet(add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+        dataset_raw = CodexSlidePhySubGraphDataSet(neighborhood_radius=int(nr), sg_radius=int(sgr), add_super_node= ("_sn" in name),
+                                               augment_radius=("_ar" in name), augment_center=("_ac" in name))
+    else:
+        raise ValueError('{} not support'.format(name))
+    value2return = list()
+    for data in dataset_raw:
+        try:
+            data_key = data[key].detach().numpy()
+        except AttributeError:
+            data_key = data[key].to_numpy()
+        value2return.append(data_key)
+    return value2return
 
 
 def load_nx(name, dataset_dir):
@@ -221,8 +370,9 @@ def create_dataset():
         edge_negative_sampling_ratio=cfg.dataset.edge_negative_sampling_ratio,
         resample_disjoint=cfg.dataset.resample_disjoint,
         minimum_node_per_graph=min_node,
-        custom_split_graphs=[list(itemgetter(*train_ind)(graphs)), list(itemgetter(*val_ind)(graphs)), list(itemgetter(*test_ind)(graphs))]
+        custom_split_graphs = [list(itemgetter(*train_ind)(graphs)), list(itemgetter(*val_ind)(graphs)), list(itemgetter(*test_ind)(graphs))]
         )
+
     ## Transform the whole dataset
     dataset = transform_before_split(dataset)
 
@@ -256,9 +406,9 @@ def create_dataset():
     return datasets
 
 
-def create_loader(datasets):
+def create_loader(datasets, shuffle=True):
     loader_train = DataLoader(datasets[0], collate_fn=Batch.collate(),
-                              batch_size=cfg.train.batch_size, shuffle=True,
+                              batch_size=cfg.train.batch_size, shuffle=shuffle,
                               num_workers=cfg.num_workers, pin_memory=False)
 
     loaders = [loader_train]
