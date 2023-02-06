@@ -1,0 +1,10 @@
+# Format for each row: name in config.py; alias; range to search
+# No spaces, except between these 3 fields
+# Line breaks are used to union different grid search spaces
+# Feel free to add '#' to add comments
+
+
+# (1) dataset configurations
+dataset.name dataset ['STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph0','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph1','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph2','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph3','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph4','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph5','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph6','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph7','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph8','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph9']
+optim.weight_decay wei_dec [5e-4,5e-3,5e-2,1e-1]
+optim.base_lr lr [0.001,0.0001,0.00001]

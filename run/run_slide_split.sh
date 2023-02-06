@@ -1,9 +1,9 @@
 ##!/usr/bin/env bash
 #
 CONFIG=c1
-GRID=c1_full
-REPEAT=4
-MAX_JOBS=8
+GRID=ST_weight
+REPEAT=2
+MAX_JOBS=1
 SLEEP=1
 IMC_PATH=C:\/Users\/shayshi\/Documents\/IMCcode
 # generate configs (after controlling computational budget)

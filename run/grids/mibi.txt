@@ -1,0 +1,9 @@
+# Format for each row: name in config.py; alias; range to search
+# No spaces, except between these 3 fields
+# Line breaks are used to union different grid search spaces
+# Feel free to add '#' to add comments
+
+
+# (1) dataset configurations
+dataset.name dataset ['MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph0','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph1','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph2','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph3','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph4','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph5','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph6','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph7','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph8','MibiSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph9']
+optim.base_lr lr [0.001,0.01,0.0001,0.00001]

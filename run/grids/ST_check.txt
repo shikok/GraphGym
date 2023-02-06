@@ -3,4 +3,5 @@
 # Line breaks are used to union different grid search spaces
 # Feel free to add '#' to add comments
 # (1) dataset configurations
-dataset.name dataset ['STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph0','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph1','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph2']
+dataset.name dataset ['STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph0','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph1','STSlidePhySubGraphDataSet_nr_200_sgr_10_sub_graph2','STSlidePhySubGraphDataSet_nr_200_sgr_15_sub_graph0','STSlidePhySubGraphDataSet_nr_200_sgr_15_sub_graph1','STSlidePhySubGraphDataSet_nr_200_sgr_15_sub_graph2','STSlidePhySubGraphDataSet_nr_200_sgr_5_sub_graph0','STSlidePhySubGraphDataSet_nr_200_sgr_5_sub_graph1','STSlidePhySubGraphDataSet_nr_200_sgr_5_sub_graph2']
+optim.base_lr lr [0.01,0.0001,0.1,0.001]

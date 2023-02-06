@@ -6,4 +6,6 @@
 
 # (1) dataset configurations
 dataset.name dataset ['C2SlidePhySubGraphDataSet0','C2SlidePhySubGraphDataSet1','C2SlidePhySubGraphDataSet2','C2SlidePhySubGraphDataSet3','C2SlidePhySubGraphDataSet4','C2SlidePhySubGraphDataSet5','C2SlidePhySubGraphDataSet6','C2SlidePhySubGraphDataSet7','C2SlidePhySubGraphDataSet8','C2SlidePhySubGraphDataSet9']
-optim.base_lr lr [0.0001,0.00001]
+gnn.agg agg ['add','mean','max']
+optim.weight_decay wei_dec [5e-4,5e-3,5e-2,1e-1]
+model.graph_pooling g_p ['add','mean','max']

@@ -1,0 +1,11 @@
+# Format for each row: name in config.py; alias; range to search
+# No spaces, except between these 3 fields
+# Line breaks are used to union different grid search spaces
+# Feel free to add '#' to add comments
+
+
+# (1) dataset configurations
+dataset.name dataset ['C1SlidePhySubGraphDataSet0','C1SlidePhySubGraphDataSet1','C1SlidePhySubGraphDataSet2','C1SlidePhySubGraphDataSet3','C1SlidePhySubGraphDataSet4','C1SlidePhySubGraphDataSet5','C1SlidePhySubGraphDataSet6','C1SlidePhySubGraphDataSet7','C1SlidePhySubGraphDataSet8','C1SlidePhySubGraphDataSet9']
+gnn.agg agg ['add','mean','max']
+optim.weight_decay wei_dec [5e-4,5e-3,5e-2,1e-1]
+model.graph_pooling g_p ['add','mean','max']
