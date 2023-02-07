@@ -1,7 +1,7 @@
 ##!/usr/bin/env bash
 #
 CONFIG=c1
-GRID=ST_weight
+GRID=ST
 REPEAT=2
 MAX_JOBS=1
 SLEEP=1

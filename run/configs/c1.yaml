@@ -1,7 +1,7 @@
 out_dir: results
 dataset:
   format: PyG
-  name: C1SlidePhysicalDataSet0
+  name: CodexSlidePhySubGraphDataSet_nr_25_sgr_10_sub_graph
   task: graph
   task_type: classification_binary
   transductive: False
@@ -11,7 +11,7 @@ dataset:
   edge_encoder_name: Bond
   shuffle_split: False
 train:
-  batch_size: 9
+  batch_size: 512
   eval_period: 1
   ckpt_period: 10
   sampler: full_batch
@@ -33,5 +33,7 @@ gnn:
   normalize_adj: False
 optim:
   optimizer: adam
-  base_lr: 0.01
-  max_epoch: 15
+  base_lr: 0.001
+  weight_decay: 0.005
+  max_epoch: 200
+  scheduler: 'none'
